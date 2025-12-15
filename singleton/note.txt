@@ -1,0 +1,33 @@
+Singleton Pattern memastikan bahwa:
+
+    -> HANYA ADA 1 INSTANCE dari sebuah class
+    -> Instance itu digunakan bersama di seluruh aplikasi
+
+    Aplikasi → 1 object → dipakai bersama
+
+Cara Kerja Singleton (Konsep)
+
+Singleton bekerja dengan 3 aturan utama:
+
+1️. Constructor dibuat private
+
+    Class tidak bisa di-new dari luar
+    
+    private Singleton() {}
+
+2️. Instance disimpan sebagai static
+
+    static → milik class, bukan object
+    Bisa diakses tanpa membuat object baru
+
+    private static Singleton instance;
+
+3️. Akses instance lewat method khusus
+    Biasanya getInstance()
+
+    public static Singleton getInstance() {
+        if (instance == null) {
+            instance = new Singleton();
+        }
+        return instance;
+    }
