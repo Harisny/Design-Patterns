@@ -1,3 +1,5 @@
+package prototype;
+
 public class UserProfile implements Cloneable {
     private String name;
     private String role;
@@ -18,6 +20,14 @@ public class UserProfile implements Cloneable {
 
     public UserProfile clone() {
         return new UserProfile(this);
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAge(Integer age) {
+        this.age = age;
     }
 
     @Override

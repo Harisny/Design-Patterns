@@ -1,0 +1,41 @@
+Prototype Pattern adalah creational design pattern yang digunakan untuk:
+
+-> Membuat object baru dengan menyalin (clone) object yang sudah ada
+-> Tanpa membuat object dari awal menggunakan new
+
+Object lama → di-clone → object baru
+
+Game Character
+Warrior template → clone → Warrior baru
+Mage template → clone → Mage baru
+
+Prototype → buat object dengan menyalin object yang sudah ada
+Cara biasa → buat object dari nol pakai new
+
+```
+
+Prototype bekerja dengan 3 komponen utama:
+
+1. Interface / Abstract Class Prototype
+
+Menentukan bahwa object bisa di-clone
+
+    public interface Prototype {
+        Prototype clone();
+    }
+
+2. Concrete Prototype
+
+Class yang mengimplementasikan clone
+
+    public class Document implements Prototype {
+        @Override
+        public Document clone() {
+            return new Document(this);
+        }
+    }
+
+3. Client
+
+    Tidak peduli detail pembuatan object
+    Client cukup clone prototype
