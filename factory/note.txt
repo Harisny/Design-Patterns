@@ -1,0 +1,88 @@
+Factory Pattern adalah creational design pattern yang digunakan untuk:
+
+-> Membuat object TANPA client tahu class konkretnya
+-> Memindahkan logika new ke satu tempat (factory)
+
+    Client → Factory → Object
+    Client tidak peduli object dibuat dari class apa.
+
+```
+Masalah Tanpa Factory 
+PaymentService payment;
+
+    if (type.equals("CREDIT_CARD")) {
+        payment = new CreditCardPayment();
+    } else if (type.equals("PAYPAL")) {
+        payment = new PaypalPayment();
+    } else {
+        payment = new CashPayment();
+    }
+
+Banyak if-else
+Sulit ditambah
+
+** Simple Factory
+-> Concrete Product
+
+    public class CreditCardPayment implements Payment {
+        public void pay(int amount) {
+            System.out.println("Bayar " + amount + " pakai Credit Card");
+        }
+    }
+
+    public class PaypalPayment implements Payment {
+        public void pay(int amount) {
+            System.out.println("Bayar " + amount + " pakai Paypal");
+        }
+    }
+
+-> Factory
+
+    public class PaymentFactory {
+
+        public static Payment create(String type) {
+            if (type.equalsIgnoreCase("CREDIT")) {
+                return new CreditCardPayment();
+            }
+            if (type.equalsIgnoreCase("PAYPAL")) {
+                return new PaypalPayment();
+            }
+            throw new IllegalArgumentException("Tipe pembayaran tidak dikenal");
+        }
+    }
+
+-> Client
+
+    Payment payment = PaymentFactory.create("CREDIT");
+    payment.pay(100_000);
+
+**Method Factory (Lebih Clean)
+
+-> Creator
+
+    public interface Notification {
+        public void send(String message);
+    }
+
+    public abstract class NotificationFactory {
+        public abstract Notification create();
+    }
+
+-> Concrete Factory
+
+    public class EmailNotificationFactory extends NotificationFactory {
+        public Notification create() {
+            return new EmailNotification();
+        }
+    }
+
+-> Client
+
+    NotificationFactory factory1 = new EmailNotificationFactory();
+    Notification email = factory1.create();
+    email.send("kirim via email");
+
+    NotificationFactory factory2 = new SmsNotificationFactory();
+    Notification sms = factory2.create();
+    sms.send("Kirim via SMS");
+
