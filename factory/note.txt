@@ -19,6 +19,7 @@ PaymentService payment;
     }
 
 Banyak if-else
+selalu Membuat object baru
 Sulit ditambah
 
 ** Simple Factory

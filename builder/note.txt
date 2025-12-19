@@ -1,0 +1,160 @@
+Builder Pattern adalah creational design pattern yang digunakan untuk:
+
+-> Membuat object kompleks
+-> Secara bertahap (step by step)
+-> Tanpa constructor panjang dan membingungkan
+
+    Builder → set bagian-bagian → build() → Object
+
+    Masalah Tanpa Builder (Constructor Hell)
+
+    User user = new User(
+        "Haris",
+        "ADMIN",
+        22,
+        "Jakarta",
+        "0812345678",
+        true,
+        false
+    );
+
+    -> Sulit dibaca
+    -> Urutan salah → BUG
+    -> Sulit ditambah field baru
+
+
+Cara Kerja Builder
+Builder terdiri dari 4 bagian utama:
+
+1️.  Product
+    Object yang ingin dibuat
+
+2️.  Builder
+    Class yang membangun product secara bertahap
+
+3️.  Method Fluent
+    Method yang mengembalikan builder (return this)
+
+4️.  build()
+    Method terakhir untuk menghasilkan object
+
+-> 1
+    public class User {
+
+        private String name;
+        private String role;
+        private int age;
+        private String address;
+        private String phone;
+        private boolean active;
+
+        public User(
+                String name,
+                String role,
+                int age,
+                String address,
+                String phone,
+                boolean active
+        ) {
+            this.name = name;
+            this.role = role;
+            this.age = age;
+            this.address = address;
+            this.phone = address;
+            this.active = active;
+        }
+
+        @Override
+        public String toString() {
+            return name + ", " + role + ", " + age + ", " +
+                address + ", " + phone + ", active=" + active;
+        }
+    }
+-> 2
+    public class User {
+
+        private final String name;
+        private final String role;
+        private final int age;
+        private final String address;
+        private final String phone;
+        private final boolean active;
+
+        User(UserBuilder builder) {
+            this.name = builder.name;
+            this.role = builder.role;
+            this.age = builder.age;
+            this.address = builder.address;
+            this.phone = builder.phone;
+            this.active = builder.active;
+        }
+
+        @Override
+        public String toString() {
+            return name + ", " + role + ", " + age + ", " +
+                address + ", " + phone + ", active=" + active;
+        }
+    }
+
+-> 3 Builder
+    public class UserBuilder {
+
+        String name;  --> TIDAK DI ENCAPSULATION
+        String role;
+        int age;
+        String address;
+        String phone;
+        boolean active;
+
+        public UserBuilder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public UserBuilder role(String role) {
+            this.role = role;
+            return this;
+        }
+
+        public UserBuilder age(int age) {
+            this.age = age;
+            return this;
+        }
+
+        public UserBuilder address(String address) {
+            this.address = address;
+            return this;
+        }
+
+        public UserBuilder phone(String phone) {
+            this.phone = phone;
+            return this;
+        }
+
+        public UserBuilder active(boolean active) {
+            this.active = active;
+            return this;
+        }
+
+        public User build() {
+            return new User(this); -> build (mereturn object beserta semua objectnya)
+        }
+    }
+
+-> 4 Cara Pakai Builder
+
+    public class Main {
+        public static void main(String[] args) {
+
+            User user = new UserBuilder()
+                    .name("Haris")
+                    .role("ADMIN")
+                    .age(22)
+                    .address("Jakarta")
+                    .phone("0812345678")
+                    .active(true)
+                    .build();
+
+            System.out.println(user);
+        }
+    }

@@ -1,3 +1,5 @@
+package singleton;
+
 public class DatabaseConnection {
     // instance disimpan dalam static
     private static DatabaseConnection instance;

@@ -1,5 +1,8 @@
+package singleton;
+
 public class Main {
     public static void main(String[] args) {
+        // singleton
         DatabaseConnection db1 = DatabaseConnection.getInstance();
         DatabaseConnection db2 = DatabaseConnection.getInstance();
 
@@ -11,6 +14,7 @@ public class Main {
         // ini db1 : DatabaseConnection@28a418fc
         // ini db2 : DatabaseConnection@28a418fc
 
+        // plan object dan bukan singleton
         DatabaseConnection1 db3 = new DatabaseConnection1();
         DatabaseConnection1 db4 = new DatabaseConnection1();
 

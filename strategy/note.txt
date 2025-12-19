@@ -1,0 +1,74 @@
+Strategy Pattern adalah behavioral design pattern yang digunakan untuk:
+
+-> Menukar algoritma / perilaku
+-> Tanpa mengubah kode client
+-> Dengan cara membuat algoritma interchangeable
+
+    Context → Interface Strategy → Implementasi Strategy
+
+Cara Kerja Strategy
+
+Strategy terdiri dari 3 komponen utama:
+
+1️. Strategy (Interface)
+
+    Menentukan kontrak algoritma
+
+2️. Concrete Strategy
+
+    Implementasi algoritma yang berbeda
+
+3️. Context
+
+    Class yang menggunakan strategy, bukan mengimplementasikan detailnya
+
+1. Strategy Interface
+    public interface PaymentStrategy {
+        void pay(int amount);
+    }
+
+2. Concrete Strategy
+
+    public class CreditCardPayment implements PaymentStrategy {
+        @Override
+        public void pay(int amount) {
+            System.out.println("Bayar " + amount + " pakai Credit Card");
+        }
+    }
+
+    public class EWalletPayment implements PaymentStrategy {
+        @Override
+        public void pay(int amount) {
+            System.out.println("Bayar " + amount + " pakai E-Wallet");
+        }
+    }
+
+3. Context
+
+    public class PaymentContext {
+
+        private PaymentStrategy strategy;
+
+        public void setStrategy(PaymentStrategy strategy) {
+            this.strategy = strategy;
+        }
+
+        public void executePayment(int amount) {
+            strategy.pay(amount);
+        }
+    }
+
+4. client
+
+    public class Main {
+        public static void main(String[] args) {
+
+            PaymentContext context = new PaymentContext();
+
+            context.setStrategy(new CreditCardPayment());
+            context.executePayment(100_000);
+
+            context.setStrategy(new EWalletPayment());
+            context.executePayment(50_000);
+        }
+    }
